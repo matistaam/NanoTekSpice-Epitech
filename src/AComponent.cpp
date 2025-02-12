@@ -8,6 +8,17 @@
 #include "AComponent.hpp"
 
 namespace nts {
+    void AComponent::simulate(std::size_t tick)
+    {
+        (void)tick;
+    }
+
+    Tristate AComponent::compute(std::size_t pin)
+    {
+        (void)pin;
+        return (Tristate::UNDEFINED);
+    }
+
     Tristate AComponent::getLink(std::size_t pin) const
     {
         auto it = this->_links.find(pin);

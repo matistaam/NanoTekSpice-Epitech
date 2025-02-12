@@ -6,6 +6,7 @@
 */
 
 #pragma once
+#include <cstddef>
 
 namespace nts {
     enum class Tristate {
