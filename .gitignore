@@ -16,4 +16,3 @@ tests
 *.cor
 *.so
 nanotekspice
-main.cpp
