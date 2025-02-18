@@ -6,10 +6,7 @@
 ##
 
 CXX				=	g++
-
-CXXFLAGS		=	-std=c++20 -Wall -Wextra -Werror -g3
-
-CPPFLAGS		=	-I./include
+CXXFLAGS		=	-std=c++20 -Wall -Wextra -Werror -g3 -I./include
 
 SRC_FILES		=	$(wildcard src/*.cpp) \
 					$(wildcard src/*/*.cpp)
@@ -23,10 +20,10 @@ RM				=	rm -f
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) $(OBJ_FILES) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ_FILES)
