@@ -9,10 +9,13 @@
 #include "Circuit.hpp"
 #include "InputComponent.hpp"
 #include "OutputComponent.hpp"
+#include "NtsException.hpp"
 
 namespace nts {
     void Circuit::addComponent(const std::string &name, std::unique_ptr<IComponent> component)
     {
+        if (this->_components.find(name) != this->_components.end())
+            throw DuplicateComponentError(name);
         this->_components[name] = std::move(component);
     }
 
@@ -21,7 +24,7 @@ namespace nts {
         auto it = this->_components.find(name);
 
         if (it == this->_components.end())
-            return (nullptr);
+            throw UnknownComponentError(name);
         return (it->second.get());
     }
 
@@ -54,5 +57,11 @@ namespace nts {
         (void)pin;
         (void)other;
         (void)otherPin;
+    }
+
+    void Circuit::checkEmpty() const
+    {
+        if (this->_components.empty())
+            throw EmptyCircuitError();
     }
 }

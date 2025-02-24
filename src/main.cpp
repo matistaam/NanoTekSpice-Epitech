@@ -18,6 +18,7 @@
 #include "OutputComponent.hpp"
 #include "ClockComponent.hpp"
 #include "Circuit.hpp"
+#include "NtsException.hpp"
 
 std::ostream &operator<<(std::ostream &s, nts::Tristate v)
 {

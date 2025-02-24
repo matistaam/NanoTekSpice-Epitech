@@ -22,6 +22,8 @@ namespace nts {
 
             void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) override;
 
+            void checkEmpty() const;
+
         private:
             std::map<std::string, std::unique_ptr<IComponent>> _components;
     };
