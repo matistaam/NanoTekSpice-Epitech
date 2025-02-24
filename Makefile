@@ -6,7 +6,7 @@
 ##
 
 CXX				=	g++
-CXXFLAGS		=	-std=c++20 -Wall -Wextra -Werror -g3 -I./include
+CXXFLAGS		=	-std=c++20 -Wall -Wextra -Werror -g3 -I./include -I./include/SpecialComponents -I./include/ElementaryComponents -I./include/GatesComponents
 
 SRC_FILES		=	$(wildcard src/*.cpp) \
 					$(wildcard src/*/*.cpp)
