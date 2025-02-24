@@ -20,6 +20,11 @@
 #include "Circuit.hpp"
 #include "NtsException.hpp"
 #include "Component4001.hpp"
+#include "Component4011.hpp"
+#include "Component4030.hpp"
+#include "Component4069.hpp"
+#include "Component4071.hpp"
+#include "Component4081.hpp"
 
 std::ostream &operator<<(std::ostream &s, nts::Tristate v)
 {
