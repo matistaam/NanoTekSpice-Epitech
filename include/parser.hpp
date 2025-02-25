@@ -27,7 +27,8 @@ struct Token {
     int line;
 };
 
-// Function to tokenize the input source string.
-std::vector<Token> tokenize(const std::string& filePath);
-
-void printTokens(const std::vector<Token>& tokens);
+class Parser {
+    public:
+        std::vector<Token> tokenize(const std::string& filePath);
+        void printTokens(const std::vector<Token>& tokens);
+    };

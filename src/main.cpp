@@ -36,7 +36,9 @@ int main(int ac, char **av)
         std::cerr << "Usage: " << av[0] << " <circuit_file>" << std::endl;
         return (84);
     }
-    std::vector<Token> tokens = tokenize(av[1]);
+    Parser parser;
+    std::vector<Token> tokens = parser.tokenize(av[1]);
+    parser.printTokens(tokens);
 
     nts::Circuit circuit;
     nts::Shell shell(circuit);
