@@ -25,22 +25,7 @@
 #include "Component4069.hpp"
 #include "Component4071.hpp"
 #include "Component4081.hpp"
-
-std::ostream &operator<<(std::ostream &s, nts::Tristate v)
-{
-    switch (v) {
-        case nts::Tristate::UNDEFINED:
-            s << "U";
-            break;
-        case nts::Tristate::TRUE:
-            s << "1";
-            break;
-        case nts::Tristate::FALSE:
-            s << "0";
-            break;
-    }
-    return (s);
-}
+#include "Shell.hpp"
 
 int main(int ac, char **av)
 {
@@ -48,5 +33,8 @@ int main(int ac, char **av)
         std::cerr << "Usage: " << av[0] << " <circuit_file>" << std::endl;
         return (84);
     }
+    nts::Circuit circuit;
+    nts::Shell shell(circuit);
+    shell.run();
     return (0);
 }

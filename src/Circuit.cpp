@@ -65,3 +65,19 @@ namespace nts {
             throw EmptyCircuitError();
     }
 }
+
+std::ostream &operator<<(std::ostream &s, nts::Tristate v)
+{
+    switch (v) {
+        case nts::Tristate::UNDEFINED:
+            s << "U";
+            break;
+        case nts::Tristate::TRUE:
+            s << "1";
+            break;
+        case nts::Tristate::FALSE:
+            s << "0";
+            break;
+    }
+    return (s);
+}
