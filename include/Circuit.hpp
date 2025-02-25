@@ -9,10 +9,13 @@
 #include "IComponent.hpp"
 #include <map>
 #include <memory>
+#include <functional>
 
 namespace nts {
     class Circuit : public IComponent {
         public:
+            Circuit();
+
             void addComponent(const std::string &name, std::unique_ptr<IComponent> component);
             IComponent *findComponent(const std::string &name);
             void display() const;
@@ -26,6 +29,7 @@ namespace nts {
 
             std::unique_ptr<IComponent> createComponent(const std::string &type);
         private:
+            std::map<std::string, std::function<std::unique_ptr<IComponent>()>> _factories;
             std::map<std::string, std::unique_ptr<IComponent>> _components;
     };
 }

@@ -21,6 +21,23 @@
 #include "NtsException.hpp"
 
 namespace nts {
+    Circuit::Circuit()
+    {
+        this->_factories = {
+            {"input", []() { return (std::make_unique<InputComponent>()); }},
+            {"output", []() { return (std::make_unique<OutputComponent>()); }},
+            {"clock", []() { return (std::make_unique<ClockComponent>()); }},
+            {"true", []() { return (std::make_unique<TrueComponent>()); }},
+            {"false", []() { return (std::make_unique<FalseComponent>()); }},
+            {"4001", []() { return (std::make_unique<Component4001>()); }},
+            {"4011", []() { return (std::make_unique<Component4011>()); }},
+            {"4030", []() { return (std::make_unique<Component4030>()); }},
+            {"4069", []() { return (std::make_unique<Component4069>()); }},
+            {"4071", []() { return (std::make_unique<Component4071>()); }},
+            {"4081", []() { return (std::make_unique<Component4081>()); }}
+        };
+    }
+
     void Circuit::addComponent(const std::string &name, std::unique_ptr<IComponent> component)
     {
         if (this->_components.find(name) != this->_components.end())
@@ -74,31 +91,13 @@ namespace nts {
             throw EmptyCircuitError();
     }
 
-    std::unique_ptr<IComponent> Circuit::createComponent(const std::string& type)
+    std::unique_ptr<IComponent> Circuit::createComponent(const std::string &type)
     {
-        if (type == "input")
-            return std::make_unique<InputComponent>();
-        if (type == "output")
-            return std::make_unique<OutputComponent>();
-        if (type == "clock")
-            return std::make_unique<ClockComponent>();
-        if (type == "true")
-            return std::make_unique<TrueComponent>();
-        if (type == "false")
-            return std::make_unique<FalseComponent>();
-        if (type == "4001")
-            return std::make_unique<Component4001>();
-        if (type == "4011")
-            return std::make_unique<Component4011>();
-        if (type == "4030")
-            return std::make_unique<Component4030>();
-        if (type == "4069")
-            return std::make_unique<Component4069>();
-        if (type == "4071")
-            return std::make_unique<Component4071>();
-        if (type == "4081")
-            return std::make_unique<Component4081>();
-        throw UnknownComponentError(type);
+        auto it = this->_factories.find(type);
+
+        if (it == this->_factories.end())
+            throw UnknownComponentError(type);
+        return (it->second());
     }
 }
 
