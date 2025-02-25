@@ -9,6 +9,15 @@
 #include "Circuit.hpp"
 #include "InputComponent.hpp"
 #include "OutputComponent.hpp"
+#include "ClockComponent.hpp"
+#include "TrueComponent.hpp"
+#include "FalseComponent.hpp"
+#include "Component4001.hpp"
+#include "Component4011.hpp"
+#include "Component4030.hpp"
+#include "Component4069.hpp"
+#include "Component4071.hpp"
+#include "Component4081.hpp"
 #include "NtsException.hpp"
 
 namespace nts {
@@ -63,6 +72,33 @@ namespace nts {
     {
         if (this->_components.empty())
             throw EmptyCircuitError();
+    }
+
+    std::unique_ptr<IComponent> Circuit::createComponent(const std::string& type)
+    {
+        if (type == "input")
+            return std::make_unique<InputComponent>();
+        if (type == "output")
+            return std::make_unique<OutputComponent>();
+        if (type == "clock")
+            return std::make_unique<ClockComponent>();
+        if (type == "true")
+            return std::make_unique<TrueComponent>();
+        if (type == "false")
+            return std::make_unique<FalseComponent>();
+        if (type == "4001")
+            return std::make_unique<Component4001>();
+        if (type == "4011")
+            return std::make_unique<Component4011>();
+        if (type == "4030")
+            return std::make_unique<Component4030>();
+        if (type == "4069")
+            return std::make_unique<Component4069>();
+        if (type == "4071")
+            return std::make_unique<Component4071>();
+        if (type == "4081")
+            return std::make_unique<Component4081>();
+        throw UnknownComponentError(type);
     }
 }
 
