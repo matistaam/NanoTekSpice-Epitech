@@ -6,6 +6,8 @@
 */
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <memory>
 #include "IComponent.hpp"
 #include "AndComponent.hpp"
@@ -26,6 +28,7 @@
 #include "Component4071.hpp"
 #include "Component4081.hpp"
 #include "Shell.hpp"
+#include "parser.hpp"
 
 int main(int ac, char **av)
 {
@@ -33,6 +36,8 @@ int main(int ac, char **av)
         std::cerr << "Usage: " << av[0] << " <circuit_file>" << std::endl;
         return (84);
     }
+    std::vector<Token> tokens = tokenize(av[1]);
+
     nts::Circuit circuit;
     nts::Shell shell(circuit);
     shell.run();

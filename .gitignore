@@ -17,3 +17,4 @@ tests
 *.so
 nanotekspice
 B-OOP-400_nanotekspice
+*.nts
