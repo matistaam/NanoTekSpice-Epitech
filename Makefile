@@ -5,11 +5,13 @@
 ## Makefile
 ##
 
-CXX				=	g++
-CXXFLAGS		=	-std=c++20 -Wall -Wextra -Werror -g3 -I./include -I./include/SpecialComponents -I./include/ElementaryComponents -I./include/GatesComponents
+INCLUDE_DIRS	=	$(shell find include -type d)
+INCLUDE_FLAGS	=	$(addprefix -I, $(INCLUDE_DIRS))
 
-SRC_FILES		=	$(wildcard src/*.cpp) \
-					$(wildcard src/*/*.cpp)
+CXX				=	g++
+CXXFLAGS		=	-std=c++20 -Wall -Wextra -Werror -g3 $(INCLUDE_FLAGS)
+
+SRC_FILES		=	$(shell find src -name "*.cpp")
 
 OBJ_FILES		=	$(SRC_FILES:.cpp=.o)
 
@@ -20,16 +22,21 @@ RM				=	rm -f
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	@echo "Linking $(NAME)..."
+	@$(CXX) $(CXXFLAGS) $^ -o $@
+	@echo "Done!"
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "Compiling $<"
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ_FILES)
+	@echo "Cleaning object files..."
+	@$(RM) $(OBJ_FILES)
 
 fclean: clean
-	$(RM) $(NAME)
+	@echo "Cleaning executable..."
+	@$(RM) $(NAME)
 
 re: fclean all
 
