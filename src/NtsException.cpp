@@ -14,7 +14,7 @@ namespace nts {
 
     const char *NtsException::what() const noexcept
     {
-        return (_message.c_str());
+        return (this->_message.c_str());
     }
 
     ParseError::ParseError(const std::string &message) : NtsException("Parse error: " + message)

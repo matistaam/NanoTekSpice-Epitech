@@ -27,10 +27,10 @@ namespace nts {
         std::string command;
 
         std::cout << "> ";
-        while (_running && std::getline(std::cin, command)) {
+        while (this->_running && std::getline(std::cin, command)) {
             if (!command.empty())
                 handleCommand(command);
-            if (_running)
+            if (this->_running)
                 std::cout << "> ";
         }
     }
@@ -38,7 +38,7 @@ namespace nts {
     void Shell::handleCommand(const std::string &command)
     {
         if (command == "exit")
-            _running = false;
+            this->_running = false;
         else if (command == "simulate")
             simulate();
         else if (command == "display")
@@ -54,13 +54,13 @@ namespace nts {
 
     void Shell::display() const
     {
-        std::cout << "tick: " << _tick << std::endl;
-        _circuit.display();
+        std::cout << "tick: " << this->_tick << std::endl;
+        this->_circuit.display();
     }
 
     void Shell::setInput(const std::string &name, const std::string &value)
     {
-        auto *component = dynamic_cast<InputComponent*>(_circuit.findComponent(name));
+        auto *component = dynamic_cast<InputComponent*>(this->_circuit.findComponent(name));
 
         if (!component)
             return;
@@ -74,7 +74,7 @@ namespace nts {
 
     void Shell::simulate()
     {
-        _circuit.simulate(_tick++);
+        this->_circuit.simulate(this->_tick++);
     }
 
     void Shell::loop()
