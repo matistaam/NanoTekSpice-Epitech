@@ -15,7 +15,7 @@ namespace nts {
             ~AComponent() = default;
 
             void simulate(std::size_t tick) override;
-            virtual Tristate compute(std::size_t pin) = 0;
+            virtual Tristate compute(std::size_t pin) override;
 
             Tristate getLink(std::size_t pin) const;
 
