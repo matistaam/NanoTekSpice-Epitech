@@ -36,12 +36,17 @@ int main(int ac, char **av)
         std::cerr << "Usage: " << av[0] << " <circuit_file>" << std::endl;
         return (84);
     }
-    Parser parser;
-    std::vector<Token> tokens = parser.tokenize(av[1]);
-    parser.printTokens(tokens);
-
     nts::Circuit circuit;
-    nts::Shell shell(circuit);
-    shell.run();
+    nts::Parser parser;
+    try {
+        parser.parse(av[1], circuit);
+        nts::Shell shell(circuit);
+        shell.run();
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return (84);
+    }
+
+    
     return (0);
 }

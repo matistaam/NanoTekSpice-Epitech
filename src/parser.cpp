@@ -4,112 +4,112 @@
 ** File description:
 ** parser
 */
-
 #include "parser.hpp"
+#include "NtsException.hpp"
 #include <sstream>
-#include <cctype>
 #include <iostream>
-#include <fstream>
+#include <cstdlib>
 
-std::vector<Token> Parser::tokenize(const std::string& filePath) {
-    std::ifstream file(filePath);
-    if (!file) {
-        throw std::runtime_error("Unable to open file: " + filePath);
-    }
+namespace nts {
+    void Parser::parse(const std::string &filePath, nts::Circuit &circuit) {
+        std::cout << "Parsing file: " << filePath << std::endl;
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    std::string source = buffer.str();
+        // First, tokenize the file.
+        std::vector<Token> tokens = tokenize(filePath);
+        size_t pos = 0;
 
-    std::vector<Token> tokens;
-    std::istringstream iss(source);
-    std::string line;
-    int lineNumber = 0;
+        // We'll use a state machine to know which section we're parsing.
+        enum class ParseState { None, Chipsets, Links };
+        ParseState state = ParseState::None;
 
-    while (std::getline(iss, line)) {
-        lineNumber++;
-        // Remove any comment (anything after '#' is ignored)
-        size_t commentPos = line.find('#');
-        if (commentPos != std::string::npos) {
-            line = line.substr(0, commentPos);
-        }
+        while (pos < tokens.size()) {
+            Token token = tokens[pos];
+            std::cout << "Token: " << token.value << " (Type: " << static_cast<int>(token.type) << ")" << std::endl;
 
-        // Skip empty lines (or lines that are only whitespace)
-        if (line.find_first_not_of(" \t") == std::string::npos)
-            continue;
-
-        // Process the line character by character.
-        for (size_t i = 0; i < line.size(); i++) {
-            // Skip whitespace characters.
-            if (std::isspace(line[i]))
+            // Switch section if we encounter a section token.
+            if (token.type == TokenType::Chipsets) {
+                state = ParseState::Chipsets;
+                pos++;
+                std::cout << "Entering Chipsets section" << std::endl;
                 continue;
+            }
+            if (token.type == TokenType::Links) {
+                state = ParseState::Links;
+                pos++;
+                std::cout << "Entering Links section" << std::endl;
+                continue;
+            }
+            // Skip end-of-line tokens.
+            if (token.type == TokenType::EndOfLine) {
+                pos++;
+                continue;
+            }
 
-            char c = line[i];
-
-            // Handle identifiers: start with a letter, underscore, or dot.
-            if (std::isalpha(c) || c == '_' || c == '.') {
-                std::string tokenStr;
-                tokenStr.push_back(c);
-                i++;
-                while (i < line.size() && (std::isalnum(line[i]) || line[i] == '_' || line[i] == '.')) {
-                    tokenStr.push_back(line[i]);
-                    i++;
+            if (state == ParseState::Chipsets) {
+                if (token.type == TokenType::Identifier || token.type == TokenType::Number) {
+                    std::string compType = token.value;
+                    pos++;
+                    if (pos < tokens.size() && tokens[pos].type == TokenType::Identifier) {
+                        std::string compName = tokens[pos].value;
+                        pos++;
+                        std::cout << "Creating component: Type = " << compType << ", Name = " << compName << std::endl;
+                        auto component = circuit.createComponent(compType);
+                        if (!component)
+                            throw UnknownComponentError(compType);
+                        circuit.addComponent(compName, std::move(component));
+                    } else {
+                        throw NtsException("Expected a component name after type " + compType);
+                    }
+                } else {
+                    pos++; // skip tokens that are not part of a valid declaration.
                 }
-                i--; // adjust index since the outer loop also increments it
-                tokens.push_back({TokenType::Identifier, tokenStr, lineNumber});
-            }
-            // Handle numbers: consecutive digits.
-            else if (std::isdigit(c)) {
-                std::string tokenStr;
-                tokenStr.push_back(c);
-                i++;
-                while (i < line.size() && std::isdigit(line[i])) {
-                    tokenStr.push_back(line[i]);
-                    i++;
+            } else if (state == ParseState::Links) {
+                if (token.type == TokenType::Identifier) {
+                    std::string comp1 = token.value;
+                    pos++;
+                    if (pos < tokens.size() && tokens[pos].type == TokenType::Colon) {
+                        pos++;
+                        if (pos < tokens.size() && tokens[pos].type == TokenType::Number) {
+                            int pin1 = std::stoi(tokens[pos].value);
+                            pos++;
+                            if (pos < tokens.size() && tokens[pos].type == TokenType::Identifier) {
+                                std::string comp2 = tokens[pos].value;
+                                pos++;
+                                if (pos < tokens.size() && tokens[pos].type == TokenType::Colon) {
+                                    pos++;
+                                    if (pos < tokens.size() && tokens[pos].type == TokenType::Number) {
+                                        int pin2 = std::stoi(tokens[pos].value);
+                                        pos++;
+                                        std::cout << "Linking components: " << comp1 << ":" << pin1 << " -> " << comp2 << ":" << pin2 << std::endl;
+                                        auto* component1 = circuit.findComponent(comp1);
+                                        auto* component2 = circuit.findComponent(comp2);
+                                        if (!component1)
+                                            throw nts::NtsException("Unknown component: " + comp1);
+                                        if (!component2)
+                                            throw nts::NtsException("Unknown component: " + comp2);
+                                        component1->setLink(pin1, *component2, pin2);
+                                    } else {
+                                        throw nts::NtsException("Expected a pin number after ':' for " + comp2);
+                                    }
+                                } else {
+                                    throw nts::NtsException("Expected ':' after component name " + comp2 + " in link");
+                                }
+                            } else {
+                                throw nts::NtsException("Expected second component name in link");
+                            }
+                        } else {
+                            throw nts::NtsException("Expected a pin number after ':' for " + comp1);
+                        }
+                    } else {
+                        throw nts::NtsException("Expected ':' after component name " + comp1 + " in link");
+                    }
+                } else {
+                    pos++; // skip tokens that are not valid start of a link.
                 }
-                i--;
-                tokens.push_back({TokenType::Number, tokenStr, lineNumber});
-            }
-            // Handle the colon punctuation.
-            else if (c == ':') {
-                tokens.push_back({TokenType::Colon, ":", lineNumber});
-            }
-            // If encountering any other character, store it as unknown.
-            else {
-                tokens.push_back({TokenType::Unknown, std::string(1, c), lineNumber});
+            } else {
+                // In state None, skip tokens until a valid section is found.
+                pos++;
             }
         }
-        // Optionally add an EndOfLine token after processing each line.
-        tokens.push_back({TokenType::EndOfLine, "\\n", lineNumber});
-    }
-    // Mark the end of file.
-    tokens.push_back({TokenType::EndOfFile, "", lineNumber});
-    return tokens;
-}
-
-void Parser::printTokens(const std::vector<Token>& tokens) {
-    for (const auto& token : tokens) {
-        std::cout << "Line " << token.line << ": ";
-        switch (token.type) {
-            case TokenType::Identifier:
-                std::cout << "Identifier(" << token.value << ")";
-                break;
-            case TokenType::Number:
-                std::cout << "Number(" << token.value << ")";
-                break;
-            case TokenType::Colon:
-                std::cout << "Colon";
-                break;
-            case TokenType::EndOfLine:
-                std::cout << "EOL";
-                break;
-            case TokenType::EndOfFile:
-                std::cout << "EOF";
-                break;
-            default:
-                std::cout << "Unknown(" << token.value << ")";
-                break;
-        }
-        std::cout << "\n";
     }
 }
