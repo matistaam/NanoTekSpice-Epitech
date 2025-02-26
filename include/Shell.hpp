@@ -24,7 +24,7 @@ namespace nts {
 
             Circuit &_circuit;
             bool _running;
-            std::size_t _tick;
             bool _looping;
+            std::size_t _tick;
     };
 }

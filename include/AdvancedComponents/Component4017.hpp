@@ -7,3 +7,6 @@
 
 #pragma once
 
+namespace nts {
+
+}

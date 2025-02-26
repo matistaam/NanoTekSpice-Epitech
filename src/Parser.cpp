@@ -2,30 +2,27 @@
 ** EPITECH PROJECT, 2025
 ** B-OOP-400-LYN-4-1-tekspice-matis.taam
 ** File description:
-** parser
+** Parser
 */
-#include "parser.hpp"
+
+#include "Parser.hpp"
 #include "NtsException.hpp"
-#include <sstream>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 
 namespace nts {
     void Parser::parse(const std::string &filePath, nts::Circuit &circuit) {
         std::cout << "Parsing file: " << filePath << std::endl;
-
         // First, tokenize the file.
         std::vector<Token> tokens = tokenize(filePath);
         size_t pos = 0;
-
         // We'll use a state machine to know which section we're parsing.
         enum class ParseState { None, Chipsets, Links };
         ParseState state = ParseState::None;
-
         while (pos < tokens.size()) {
             Token token = tokens[pos];
             std::cout << "Token: " << token.value << " (Type: " << static_cast<int>(token.type) << ")" << std::endl;
-
             // Switch section if we encounter a section token.
             if (token.type == TokenType::Chipsets) {
                 state = ParseState::Chipsets;
@@ -44,7 +41,6 @@ namespace nts {
                 pos++;
                 continue;
             }
-
             if (state == ParseState::Chipsets) {
                 if (token.type == TokenType::Identifier || token.type == TokenType::Number) {
                     std::string compType = token.value;
