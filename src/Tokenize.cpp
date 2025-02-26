@@ -57,7 +57,15 @@ namespace nts {
                         i++;
                     }
                     i--; // adjust index since the outer loop also increments it
-                    tokens.push_back({TokenType::Identifier, tokenStr, lineNumber});
+
+                    // Check for specific section tokens
+                    if (tokenStr == ".chipsets") {
+                        tokens.push_back({TokenType::Chipsets, tokenStr, lineNumber});
+                    } else if (tokenStr == ".links") {
+                        tokens.push_back({TokenType::Links, tokenStr, lineNumber});
+                    } else {
+                        tokens.push_back({TokenType::Identifier, tokenStr, lineNumber});
+                    }
                 }
                 // Handle numbers: consecutive digits.
                 else if (std::isdigit(c)) {
