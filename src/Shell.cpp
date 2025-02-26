@@ -9,6 +9,7 @@
 #include <csignal>
 #include "Shell.hpp"
 #include "InputComponent.hpp"
+#include "ClockComponent.hpp"
 
 namespace nts {
     volatile std::sig_atomic_t g_looping = true;
@@ -63,6 +64,8 @@ namespace nts {
         auto *component = dynamic_cast<InputComponent*>(this->_circuit.findComponent(name));
 
         if (!component)
+            return;
+        if (dynamic_cast<ClockComponent*>(component))
             return;
         if (value == "1")
             component->setState(Tristate::TRUE);

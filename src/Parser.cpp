@@ -84,6 +84,7 @@ namespace nts {
                                         if (!component2)
                                             throw UnknownComponentError(comp2);
                                         component1->setLink(pin1, *component2, pin2);
+                                        component2->setLink(pin2, *component1, pin1);
                                     } else {
                                         throw ParseError("Expected a pin number after ':' for " + comp2);
                                     }

@@ -13,9 +13,11 @@ namespace nts {
         (void)tick;
         Tristate current = compute(1);
 
-        if (current == Tristate::TRUE)
+        if (current == Tristate::UNDEFINED)
             setState(Tristate::FALSE);
         else if (current == Tristate::FALSE)
             setState(Tristate::TRUE);
+        else if (current == Tristate::TRUE)
+            setState(Tristate::FALSE);
     }
 }
