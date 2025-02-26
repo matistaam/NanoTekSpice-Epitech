@@ -6,6 +6,7 @@
 */
 
 #include "Parser.hpp"
+#include "NtsException.hpp"
 #include <sstream>
 #include <cctype>
 #include <iostream>
@@ -15,7 +16,7 @@ namespace nts {
     std::vector<Token> Parser::tokenize(const std::string &filePath) {
         std::ifstream file(filePath);
         if (!file)
-            throw std::runtime_error("Unable to open file: " + filePath);
+            throw ParseError("Unable to open file: " + filePath);
         std::stringstream buffer;
         buffer << file.rdbuf();
         std::string source = buffer.str();

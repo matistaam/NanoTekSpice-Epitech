@@ -28,7 +28,7 @@
 #include "Component4071.hpp"
 #include "Component4081.hpp"
 #include "Shell.hpp"
-#include "parser.hpp"
+#include "Parser.hpp"
 
 int main(int ac, char **av)
 {
@@ -46,7 +46,5 @@ int main(int ac, char **av)
         std::cerr << "Error: " << e.what() << std::endl;
         return (84);
     }
-
-    
     return (0);
 }

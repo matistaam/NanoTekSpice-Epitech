@@ -54,7 +54,7 @@ namespace nts {
                             throw UnknownComponentError(compType);
                         circuit.addComponent(compName, std::move(component));
                     } else {
-                        throw NtsException("Expected a component name after type " + compType);
+                        throw ParseError("Expected a component name after type " + compType);
                     }
                 } else {
                     pos++; // skip tokens that are not part of a valid declaration.
@@ -80,24 +80,24 @@ namespace nts {
                                         auto* component1 = circuit.findComponent(comp1);
                                         auto* component2 = circuit.findComponent(comp2);
                                         if (!component1)
-                                            throw nts::NtsException("Unknown component: " + comp1);
+                                            throw UnknownComponentError(comp1);
                                         if (!component2)
-                                            throw nts::NtsException("Unknown component: " + comp2);
+                                            throw UnknownComponentError(comp2);
                                         component1->setLink(pin1, *component2, pin2);
                                     } else {
-                                        throw nts::NtsException("Expected a pin number after ':' for " + comp2);
+                                        throw ParseError("Expected a pin number after ':' for " + comp2);
                                     }
                                 } else {
-                                    throw nts::NtsException("Expected ':' after component name " + comp2 + " in link");
+                                    throw ParseError("Expected ':' after component name " + comp2 + " in link");
                                 }
                             } else {
-                                throw nts::NtsException("Expected second component name in link");
+                                throw ParseError("Expected second component name in link");
                             }
                         } else {
-                            throw nts::NtsException("Expected a pin number after ':' for " + comp1);
+                            throw ParseError("Expected a pin number after ':' for " + comp1);
                         }
                     } else {
-                        throw nts::NtsException("Expected ':' after component name " + comp1 + " in link");
+                        throw ParseError("Expected ':' after component name " + comp1 + " in link");
                     }
                 } else {
                     pos++; // skip tokens that are not valid start of a link.
