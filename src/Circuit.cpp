@@ -22,6 +22,7 @@
 #include "Component4069.hpp"
 #include "Component4071.hpp"
 #include "Component4081.hpp"
+#include "Component4008.hpp"
 #include "NtsException.hpp"
 
 namespace nts {
@@ -42,7 +43,8 @@ namespace nts {
             {"4030", []() { return (std::make_unique<Component4030>()); }},
             {"4069", []() { return (std::make_unique<Component4069>()); }},
             {"4071", []() { return (std::make_unique<Component4071>()); }},
-            {"4081", []() { return (std::make_unique<Component4081>()); }}
+            {"4081", []() { return (std::make_unique<Component4081>()); }},
+            {"4008", []() { return (std::make_unique<Component4008>()); }}
         };
     }
 
