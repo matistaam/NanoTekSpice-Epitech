@@ -7,6 +7,10 @@
 
 #include <iostream>
 #include "Circuit.hpp"
+#include "AndComponent.hpp"
+#include "NotComponent.hpp"
+#include "OrComponent.hpp"
+#include "XorComponent.hpp"
 #include "InputComponent.hpp"
 #include "OutputComponent.hpp"
 #include "ClockComponent.hpp"
@@ -24,6 +28,10 @@ namespace nts {
     Circuit::Circuit()
     {
         this->_factories = {
+            {"and", []() { return (std::make_unique<AndComponent>()); }},
+            {"not", []() { return (std::make_unique<NotComponent>()); }},
+            {"or", []() { return (std::make_unique<OrComponent>()); }},
+            {"xor", []() { return (std::make_unique<XorComponent>()); }},
             {"input", []() { return (std::make_unique<InputComponent>()); }},
             {"output", []() { return (std::make_unique<OutputComponent>()); }},
             {"clock", []() { return (std::make_unique<ClockComponent>()); }},
