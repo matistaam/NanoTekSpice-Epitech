@@ -7,6 +7,7 @@
 
 #pragma once
 #include "AComponent.hpp"
+#include <vector>
 
 namespace nts {
     class Component4008 : public AComponent {
