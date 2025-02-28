@@ -26,6 +26,12 @@
 #include "Component4008.hpp"
 #include "Component4013.hpp"
 #include "Component4017.hpp"
+#include "Component4040.hpp"
+#include "Component4094.hpp"
+#include "Component4512.hpp"
+#include "Component4514.hpp"
+#include "Component4801.hpp"
+#include "Component2716.hpp"
 #include "LoggerComponent.hpp"
 
 namespace nts {
@@ -50,6 +56,12 @@ namespace nts {
             {"4008", []() { return (std::make_unique<Component4008>()); }},
             {"4013", []() { return (std::make_unique<Component4013>()); }},
             {"4017", []() { return (std::make_unique<Component4017>()); }},
+            // {"4040", []() { return (std::make_unique<Component4040>()); }},
+            // {"4094", []() { return (std::make_unique<Component4094>()); }},
+            // {"4512", []() { return (std::make_unique<Component4512>()); }},
+            // {"4514", []() { return (std::make_unique<Component4514>()); }},
+            // {"4801", []() { return (std::make_unique<Component4801>()); }},
+            // {"2716", []() { return (std::make_unique<Component2716>()); }},
             {"logger", []() { return (std::make_unique<LoggerComponent>()); }}
         };
     }

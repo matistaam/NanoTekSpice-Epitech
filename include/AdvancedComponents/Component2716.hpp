@@ -6,7 +6,14 @@
 */
 
 #pragma once
+#include "AComponent.hpp"
 
 namespace nts {
+    class Component2716 : public AComponent {
+        public:
 
+
+        private:
+
+    };
 }
