@@ -18,7 +18,5 @@ tests
 nanotekspice
 B-OOP-400_nanotekspice
 *.nts
-LoggerComponent.hpp
-LoggerComponent.cpp
 nts_advanced
 nts_single

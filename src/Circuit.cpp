@@ -25,7 +25,7 @@
 #include "Component4081.hpp"
 #include "Component4008.hpp"
 #include "Component4013.hpp"
-#include "Component4801.hpp"
+#include "LoggerComponent.hpp"
 
 namespace nts {
     Circuit::Circuit()
@@ -48,6 +48,7 @@ namespace nts {
             {"4081", []() { return (std::make_unique<Component4081>()); }},
             {"4008", []() { return (std::make_unique<Component4008>()); }},
             {"4013", []() { return (std::make_unique<Component4013>()); }},
+            {"logger", []() { return (std::make_unique<LoggerComponent>()); }}
         };
     }
 
