@@ -7,8 +7,6 @@
 
 #include "Component4008.hpp"
 #include "NtsException.hpp"
-#include <stdexcept>
-#include <utility>
 
 namespace nts {
     Component4008::Component4008() : _pins(16, {nullptr, 0}), _values(16, Tristate::UNDEFINED)

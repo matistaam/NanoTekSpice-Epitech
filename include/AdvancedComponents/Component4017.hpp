@@ -7,15 +7,11 @@
 
 #pragma once
 #include "AComponent.hpp"
-#include <map>
-#include <utility>
-#include <vector>
 
 namespace nts {
     class Component4017 : public AComponent {
         public:
             Component4017();
-            ~Component4017() override = default;
 
             void simulate(std::size_t tick) override;
             Tristate compute(std::size_t pin) override;
@@ -23,7 +19,6 @@ namespace nts {
         private:
             // Internal counter: values 0 to 9
             int _counter;
-
             // Previous clock values for edge detection (CP0 on pin 14, CP1 on pin 13)
             Tristate _prevCP0;
             Tristate _prevCP1;
