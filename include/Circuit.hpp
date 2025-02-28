@@ -28,6 +28,7 @@ namespace nts {
             void checkEmpty() const;
 
             std::unique_ptr<IComponent> createComponent(const std::string &type);
+
         private:
             std::map<std::string, std::function<std::unique_ptr<IComponent>()>> _factories;
             std::map<std::string, std::unique_ptr<IComponent>> _components;

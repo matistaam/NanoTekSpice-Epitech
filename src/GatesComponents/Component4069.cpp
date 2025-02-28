@@ -6,6 +6,7 @@
 */
 
 #include "Component4069.hpp"
+#include "NtsException.hpp"
 
 namespace nts {
     Tristate Component4069::computeNot(Tristate a)
@@ -19,6 +20,8 @@ namespace nts {
 
     Tristate Component4069::compute(std::size_t pin)
     {
+        if (pin < 1 || pin > 14)
+            throw InvalidPinError("4069", pin);
         switch (pin) {
             case 2:
                 return (computeNot(getLink(1)));

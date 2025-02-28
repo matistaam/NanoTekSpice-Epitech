@@ -7,13 +7,14 @@
 
 #include <iostream>
 #include "Circuit.hpp"
+#include "NtsException.hpp"
 #include "AndComponent.hpp"
 #include "NotComponent.hpp"
 #include "OrComponent.hpp"
 #include "XorComponent.hpp"
+#include "ClockComponent.hpp"
 #include "InputComponent.hpp"
 #include "OutputComponent.hpp"
-#include "ClockComponent.hpp"
 #include "TrueComponent.hpp"
 #include "FalseComponent.hpp"
 #include "Component4001.hpp"
@@ -24,7 +25,7 @@
 #include "Component4081.hpp"
 #include "Component4008.hpp"
 #include "Component4013.hpp"
-#include "NtsException.hpp"
+#include "Component4801.hpp"
 
 namespace nts {
     Circuit::Circuit()

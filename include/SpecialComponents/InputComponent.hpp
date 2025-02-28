@@ -16,6 +16,7 @@ namespace nts {
             Tristate compute(std::size_t pin) override;
 
             void setState(Tristate state);
+
         private:
             Tristate _state;
     };

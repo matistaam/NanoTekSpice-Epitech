@@ -14,6 +14,7 @@ namespace nts {
         public:
             NtsException(const std::string &message);
             const char *what() const noexcept override;
+
         private:
             std::string _message;
     };
@@ -36,5 +37,10 @@ namespace nts {
     class EmptyCircuitError : public NtsException {
         public:
             EmptyCircuitError();
+    };
+
+    class InvalidPinError : public NtsException {
+        public:
+            InvalidPinError(const std::string &componentName, std::size_t pin);
     };
 }

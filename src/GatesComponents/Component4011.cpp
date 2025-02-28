@@ -6,6 +6,7 @@
 */
 
 #include "Component4011.hpp"
+#include "NtsException.hpp"
 
 namespace nts {
     Tristate Component4011::computeNand(Tristate a, Tristate b)
@@ -19,6 +20,8 @@ namespace nts {
 
     Tristate Component4011::compute(std::size_t pin)
     {
+        if (pin < 1 || pin > 14)
+            throw InvalidPinError("4011", pin);
         switch (pin) {
             case 3:
                 return (computeNand(getLink(1), getLink(2)));

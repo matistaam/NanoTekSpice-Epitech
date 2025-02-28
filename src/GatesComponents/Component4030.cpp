@@ -6,6 +6,7 @@
 */
 
 #include "Component4030.hpp"
+#include "NtsException.hpp"
 
 namespace nts {
     Tristate Component4030::computeXor(Tristate a, Tristate b)
@@ -20,6 +21,8 @@ namespace nts {
 
     Tristate Component4030::compute(std::size_t pin)
     {
+        if (pin < 1 || pin > 14)
+            throw InvalidPinError("4030", pin);
         switch (pin) {
             case 3:
                 return (computeXor(getLink(1), getLink(2)));

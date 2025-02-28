@@ -32,4 +32,8 @@ namespace nts {
     EmptyCircuitError::EmptyCircuitError() : NtsException("No chipsets found in circuit")
     {
     }
+
+    InvalidPinError::InvalidPinError(const std::string &componentName, std::size_t pin) : NtsException("Invalid pin number for " + componentName + ": " + std::to_string(pin))
+    {
+    }
 }

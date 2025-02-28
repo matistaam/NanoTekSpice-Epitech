@@ -20,9 +20,12 @@ namespace nts {
 
         private:
             Tristate getValue(std::size_t pin);
-
+            Tristate computeAnd(Tristate a, Tristate b);
+            Tristate computeOr(Tristate a, Tristate b);
+            Tristate computeXor(Tristate a, Tristate b);
+            std::pair<Tristate, Tristate> fullAdder(Tristate a, Tristate b, Tristate carry);
             struct Link {
-                IComponent* comp;
+                IComponent *comp;
                 std::size_t pin;
             };
             std::vector<Link> _pins;
