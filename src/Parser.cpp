@@ -13,7 +13,6 @@
 
 namespace nts {
     void Parser::parse(const std::string &filePath, nts::Circuit &circuit) {
-        std::cout << "Parsing file: " << filePath << std::endl;
         // First, tokenize the file.
         std::vector<Token> tokens = tokenize(filePath);
         size_t pos = 0;
@@ -22,18 +21,15 @@ namespace nts {
         ParseState state = ParseState::None;
         while (pos < tokens.size()) {
             Token token = tokens[pos];
-            std::cout << "Token: " << token.value << " (Type: " << static_cast<int>(token.type) << ")" << std::endl;
             // Switch section if we encounter a section token.
             if (token.type == TokenType::Chipsets) {
                 state = ParseState::Chipsets;
                 pos++;
-                std::cout << "Entering Chipsets section" << std::endl;
                 continue;
             }
             if (token.type == TokenType::Links) {
                 state = ParseState::Links;
                 pos++;
-                std::cout << "Entering Links section" << std::endl;
                 continue;
             }
             // Skip end-of-line tokens.
@@ -48,7 +44,6 @@ namespace nts {
                     if (pos < tokens.size() && tokens[pos].type == TokenType::Identifier) {
                         std::string compName = tokens[pos].value;
                         pos++;
-                        std::cout << "Creating component: Type = " << compType << ", Name = " << compName << std::endl;
                         auto component = circuit.createComponent(compType);
                         if (!component)
                             throw UnknownComponentError(compType);
@@ -76,7 +71,6 @@ namespace nts {
                                     if (pos < tokens.size() && tokens[pos].type == TokenType::Number) {
                                         int pin2 = std::stoi(tokens[pos].value);
                                         pos++;
-                                        std::cout << "Linking components: " << comp1 << ":" << pin1 << " -> " << comp2 << ":" << pin2 << std::endl;
                                         auto* component1 = circuit.findComponent(comp1);
                                         auto* component2 = circuit.findComponent(comp2);
                                         if (!component1)
