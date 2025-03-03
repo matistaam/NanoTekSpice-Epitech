@@ -8,8 +8,14 @@
 #include "InputComponent.hpp"
 
 namespace nts {
-    InputComponent::InputComponent() : _state(Tristate::UNDEFINED)
+    InputComponent::InputComponent() : _state(Tristate::UNDEFINED), _nextState(Tristate::UNDEFINED)
     {
+    }
+
+    void InputComponent::simulate(std::size_t tick)
+    {
+        (void)tick;
+        this->_state = this->_nextState;
     }
 
     Tristate InputComponent::compute(std::size_t pin)
@@ -21,6 +27,6 @@ namespace nts {
 
     void InputComponent::setState(Tristate state)
     {
-        this->_state = state;
+        this->_nextState = state;
     }
 }

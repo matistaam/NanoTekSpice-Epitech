@@ -19,5 +19,6 @@ namespace nts {
             setState(Tristate::TRUE);
         else if (current == Tristate::TRUE)
             setState(Tristate::FALSE);
+        InputComponent::simulate(tick);
     }
 }

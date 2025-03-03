@@ -13,11 +13,13 @@ namespace nts {
         public:
             InputComponent();
 
+            void simulate(std::size_t tick) override;
             Tristate compute(std::size_t pin) override;
 
             void setState(Tristate state);
 
         private:
             Tristate _state;
+            Tristate _nextState;
     };
 }
