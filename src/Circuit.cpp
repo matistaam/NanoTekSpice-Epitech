@@ -87,13 +87,13 @@ namespace nts {
         std::cout << "input(s):" << std::endl;
         for (const auto &[name, component] : this->_components) {
             if (dynamic_cast<InputComponent*>(component.get())) {
-                std::cout << "   " << name << ": " << component->compute(1) << std::endl;
+                std::cout << "  " << name << ": " << component->compute(1) << std::endl;
             }
         }
         std::cout << "output(s):" << std::endl;
         for (const auto &[name, component] : this->_components) {
             if (dynamic_cast<OutputComponent*>(component.get()))
-                std::cout << "   " << name << ": " << component->compute(1) << std::endl;
+                std::cout << "  " << name << ": " << component->compute(1) << std::endl;
         }
     }
 
