@@ -14,7 +14,7 @@ namespace nts {
     {
     }
 
-    void Component4040::simulate(std::size_t /*tick*/)
+    void Component4040::simulate(std::size_t)
     {
         // Retrieve clock (pin 10) and reset (pin 11) values.
         Tristate clockVal = getValue(10);
@@ -39,19 +39,19 @@ namespace nts {
 
         // Map the outputs based on the 4040 pin configuration.
         switch (pin) {
-            case 1:  // out_11 (bit 11)
+            case 1:  
                 return ((_counter & (1 << 11)) ? Tristate::TRUE : Tristate::FALSE);
-            case 2:  // out_05 (bit 5)
+            case 2:  
                 return ((_counter & (1 << 5)) ? Tristate::TRUE : Tristate::FALSE);
-            case 3:  // out_04 (bit 4)
+            case 3:  
                 return ((_counter & (1 << 4)) ? Tristate::TRUE : Tristate::FALSE);
-            case 4:  // out_06 (bit 6)
+            case 4:  
                 return ((_counter & (1 << 6)) ? Tristate::TRUE : Tristate::FALSE);
-            case 5:  // out_03 (bit 3)
+            case 5:  
                 return ((_counter & (1 << 3)) ? Tristate::TRUE : Tristate::FALSE);
-            case 6:  // out_02 (bit 2)
+            case 6:  
                 return ((_counter & (1 << 2)) ? Tristate::TRUE : Tristate::FALSE);
-            case 7:  // out_01 (bit 1)
+            case 7:  
                 return ((_counter & (1 << 1)) ? Tristate::TRUE : Tristate::FALSE);
             case 8:  // Power pin (ignored)
                 return Tristate::UNDEFINED;
