@@ -43,7 +43,7 @@ int main(int ac, char **av)
         nts::Shell shell(circuit);
         shell.run();
     } catch (const std::exception &e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
         return (84);
     }
     return (0);

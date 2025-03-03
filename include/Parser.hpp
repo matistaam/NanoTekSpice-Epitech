@@ -8,9 +8,9 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <fstream>
 #include "Circuit.hpp"
 
-// Define the possible token types
 enum class TokenType {
     Identifier,
     Number,
@@ -22,7 +22,6 @@ enum class TokenType {
     Links
 };
 
-// Token struct holds token details
 struct Token {
     TokenType type;
     std::string value;
@@ -34,10 +33,19 @@ namespace nts {
         public:
             std::vector<Token> tokenize(const std::string &filePath);
             void parse(const std::string &filePath, nts::Circuit &circuit);
-            void printTokens(const std::vector<Token> &tokens);
+            //void printTokens(const std::vector<Token> &tokens);
 
         private:
-            void parseChipsets(std::istringstream &iss, nts::Circuit &circuit);
-            void parseLinks(std::istringstream &iss, nts::Circuit &circuit);
+            struct FileContent {
+                std::string content;
+                std::ifstream file;
+            };
+            Token processNumber(const std::string &line, size_t &i, int lineNumber);
+            Token processIdentifier(const std::string &line, size_t &i, int lineNumber);
+            void processLine(const std::string &line, int lineNumber, std::vector<Token> &tokens);
+            FileContent readFile(const std::string &filePath);
+
+            void parseLink(std::vector<Token> &tokens, size_t &pos, Circuit &circuit);
+            void parseChipset(std::vector<Token> &tokens, size_t &pos, Circuit &circuit);
     };
 }
