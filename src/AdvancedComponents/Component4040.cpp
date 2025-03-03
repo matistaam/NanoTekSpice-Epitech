@@ -61,13 +61,13 @@ namespace nts {
                 return getValue(10);
             case 11: // Reset input
                 return getValue(11);
-            case 12: // out_08 (bit 8)
+            case 12:
                 return ((_counter & (1 << 8)) ? Tristate::TRUE : Tristate::FALSE);
-            case 13: // out_07 (bit 7)
+            case 13:
                 return ((_counter & (1 << 7)) ? Tristate::TRUE : Tristate::FALSE);
-            case 14: // out_09 (bit 9)
+            case 14:
                 return ((_counter & (1 << 9)) ? Tristate::TRUE : Tristate::FALSE);
-            case 15: // out_10 (bit 10)
+            case 15:
                 return ((_counter & (1 << 10)) ? Tristate::TRUE : Tristate::FALSE);
             case 16: // Power pin (ignored)
                 return Tristate::UNDEFINED;

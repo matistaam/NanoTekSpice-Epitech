@@ -57,7 +57,7 @@ namespace nts {
             {"4013", []() { return (std::make_unique<Component4013>()); }},
             {"4017", []() { return (std::make_unique<Component4017>()); }},
             {"4040", []() { return (std::make_unique<Component4040>()); }},
-            // {"4094", []() { return (std::make_unique<Component4094>()); }},
+            {"4094", []() { return (std::make_unique<Component4094>()); }},
             // {"4512", []() { return (std::make_unique<Component4512>()); }},
             // {"4514", []() { return (std::make_unique<Component4514>()); }},
             // {"4801", []() { return (std::make_unique<Component4801>()); }},
