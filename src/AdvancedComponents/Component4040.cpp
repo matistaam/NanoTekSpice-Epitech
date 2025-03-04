@@ -7,9 +7,10 @@
 
 #include "NtsException.hpp"
 #include "Component4040.hpp"
+#include <iostream>
 
 namespace nts {
-    Component4040::Component4040() : _pins(16, {nullptr, 0}), _values(16, Tristate::UNDEFINED), _counter(0), _prevClock(Tristate::UNDEFINED)
+    Component4040::Component4040() : _pins(16, {nullptr, 0}), _values(16, Tristate::UNDEFINED), _counter(0), _prevClock(Tristate::TRUE)
     {
     }
 
@@ -17,13 +18,16 @@ namespace nts {
     {
         (void)tick;
         Tristate clockVal = getValue(10); // Retrieve clock (pin 10)
-        Tristate resetVal = getValue(11); // Reset (pin 11) values
+        Tristate resetVal = getValue(11); // Retrieve reset (pin 11)
 
-        if (resetVal == Tristate::TRUE) { // If reset is TRUE, clear the counter
+        // If reset is TRUE, clear the counter
+        if (resetVal == Tristate::TRUE) {
             this->_counter = 0;
         } else {
-            if (this->_prevClock == Tristate::TRUE && clockVal == Tristate::FALSE) // Detect a falling edge on the clock: previously TRUE and now FALSE
-                this->_counter = (this->_counter + 1) & 0xFFF; // Keep only 12 bits (modulo 4096)
+            // Change to falling-edge detection: previously TRUE and now FALSE
+            if (this->_prevClock == Tristate::TRUE && clockVal == Tristate::FALSE) {
+                this->_counter = (this->_counter + 1) & 0xFFF; // Increment counter modulo 4096
+            }
         }
         this->_prevClock = clockVal;
     }
@@ -52,9 +56,19 @@ namespace nts {
             case 9:  // out_00 (bit 0)
                 return ((this->_counter & (1 << 0)) ? Tristate::TRUE : Tristate::FALSE);
             case 10: // Clock input
-                return getValue(10);
+            {
+                Link link = this->_pins[9];
+                if (link.comp != nullptr)
+                    return link.comp->compute(link.pin);
+                return this->_values[9];
+            }
             case 11: // Reset input
-                return getValue(11);
+            {
+                Link link = this->_pins[10];
+                if (link.comp != nullptr)
+                    return link.comp->compute(link.pin);
+                return this->_values[10];
+            }
             case 12:
                 return ((this->_counter & (1 << 8)) ? Tristate::TRUE : Tristate::FALSE);
             case 13:
