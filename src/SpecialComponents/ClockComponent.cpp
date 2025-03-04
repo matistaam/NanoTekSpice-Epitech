@@ -8,17 +8,22 @@
 #include "ClockComponent.hpp"
 
 namespace nts {
+    ClockComponent::ClockComponent() : _Simulated(false)
+    {
+    }
+
     void ClockComponent::simulate(std::size_t tick)
     {
         (void)tick;
-        Tristate current = compute(1);
 
-        if (current == Tristate::UNDEFINED)
-            setState(Tristate::FALSE);
-        else if (current == Tristate::FALSE)
-            setState(Tristate::TRUE);
-        else if (current == Tristate::TRUE)
-            setState(Tristate::FALSE);
-        InputComponent::simulate(tick);
+        if (this->_state != Tristate::UNDEFINED && (this->_Simulated == false)) {
+            this->_Simulated = true;
+        } else if (this->_state != Tristate::UNDEFINED) {
+            if (this->_state == Tristate::TRUE) {
+                this->_state = Tristate::FALSE;
+            } else {
+                this->_state = Tristate::TRUE;
+            }
+        }
     }
 }

@@ -68,18 +68,22 @@ namespace nts {
 
         if (!component)
             return;
-        if (dynamic_cast<ClockComponent*>(component))
-            return;
         if (value == "1")
-            component->setState(Tristate::TRUE);
+            this->_pendingInputs[name] = Tristate::TRUE;
         else if (value == "0")
-            component->setState(Tristate::FALSE);
+            this->_pendingInputs[name] = Tristate::FALSE;
         else if (value == "U")
-            component->setState(Tristate::UNDEFINED);
+            this->_pendingInputs[name] = Tristate::UNDEFINED;
     }
 
     void Shell::simulate()
     {
+        for (const auto &[name, state] : this->_pendingInputs) {
+            auto *component = dynamic_cast<InputComponent*>(this->_circuit.findComponent(name));
+            if (component)
+                component->setState(state);
+        }
+        this->_pendingInputs.clear();
         this->_circuit.simulate(this->_tick++);
     }
 

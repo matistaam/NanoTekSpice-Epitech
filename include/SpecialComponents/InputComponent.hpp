@@ -18,7 +18,7 @@ namespace nts {
 
             void setState(Tristate state);
 
-        private:
+        protected:
             Tristate _state;
             Tristate _nextState;
     };

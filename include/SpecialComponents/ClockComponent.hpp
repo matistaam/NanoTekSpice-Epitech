@@ -7,10 +7,15 @@
 
 #pragma once
 #include "InputComponent.hpp"
+#include <stdbool.h>
 
 namespace nts {
     class ClockComponent : public InputComponent {
         public:
+            ClockComponent();
+
             void simulate(std::size_t tick) override;
+
+            bool _Simulated;
     };
 }

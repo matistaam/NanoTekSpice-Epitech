@@ -24,5 +24,6 @@ namespace nts {
             Circuit &_circuit;
             bool _running;
             std::size_t _tick;
+            std::map<std::string, Tristate> _pendingInputs;
     };
 }
