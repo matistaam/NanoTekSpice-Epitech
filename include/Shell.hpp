@@ -21,7 +21,6 @@ namespace nts {
             void setInput(const std::string &name, const std::string &value);
             void simulate();
             void loop();
-
             Circuit &_circuit;
             bool _running;
             std::size_t _tick;

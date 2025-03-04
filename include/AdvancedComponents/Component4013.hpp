@@ -16,12 +16,12 @@ namespace nts {
 
             void simulate(std::size_t tick) override;
             Tristate compute(std::size_t pin) override;
+
             void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) override;
 
         private:
             Tristate getValue(std::size_t pin);
             Tristate computeNot(Tristate a);
-
             struct Link {
                 IComponent *comp;
                 std::size_t pin;
@@ -29,7 +29,6 @@ namespace nts {
             std::vector<Link> _pins;
             std::vector<Tristate> _values;
 
-            // Internal states for the two flip-flops.
             Tristate _q1;
             Tristate _q2;
             Tristate _prevClock1;

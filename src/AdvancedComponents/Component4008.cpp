@@ -15,17 +15,18 @@ namespace nts {
 
     void Component4008::simulate(std::size_t)
     {
-        // Combinational component: no internal state update required.
     }
 
     Tristate Component4008::compute(std::size_t pin)
     {
+        Tristate carry = Tristate::UNDEFINED;
+
         if (pin < 1 || pin > 16)
             throw InvalidPinError("4008", pin);
         // For output pins, perform the full 4-bit addition.
         // Results: sum bits on pins 10, 11, 12, 13; final carry on pin 14.
         if (pin == 10 || pin == 11 || pin == 12 || pin == 13 || pin == 14) {
-            Tristate carry = getValue(9); // initial carry in from in_c
+            carry = getValue(9); // initial carry in from in_c
             auto bit0 = fullAdder(getValue(7), getValue(6), carry);
             auto bit1 = fullAdder(getValue(5), getValue(4), bit0.second);
             auto bit2 = fullAdder(getValue(3), getValue(2), bit1.second);
@@ -43,8 +44,7 @@ namespace nts {
                     return (bit3.second); // out_c
             }
         }
-        // For non-output pins, return the value provided by a linked component or stored value.
-        return (getValue(pin));
+        return (getValue(pin)); // For non-output pins, return the value provided by a linked component or stored value.
     }
 
     void Component4008::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
@@ -97,6 +97,7 @@ namespace nts {
         Tristate tmp = computeXor(a, b);
         Tristate sum = computeXor(tmp, carry);
         Tristate carry_out = computeOr(computeAnd(a, b), computeAnd(carry, tmp));
+
         return {sum, carry_out};
     }
 }

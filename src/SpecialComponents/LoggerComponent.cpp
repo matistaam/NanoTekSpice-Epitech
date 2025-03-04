@@ -24,10 +24,10 @@ namespace nts {
         (void)tick;
         Tristate clock = getLink(9);
         Tristate inhibit = getLink(10);
+        char c = 0;
 
-        if (clock == Tristate::TRUE && !this->_lastClock &&
-            inhibit == Tristate::FALSE) {
-            char c = computeChar();
+        if (clock == Tristate::TRUE && !this->_lastClock && inhibit == Tristate::FALSE) {
+            c = computeChar();
             this->_file.write(&c, 1);
             this->_file.flush();
         }
@@ -44,9 +44,10 @@ namespace nts {
     char LoggerComponent::computeChar() const
     {
         char c = 0;
+        Tristate bit = Tristate::UNDEFINED;
 
         for (int i = 0; i < 8; i++) {
-            Tristate bit = getLink(i + 1);
+            bit = getLink(i + 1);
             if (bit == Tristate::TRUE)
                 c |= (1 << i);
         }

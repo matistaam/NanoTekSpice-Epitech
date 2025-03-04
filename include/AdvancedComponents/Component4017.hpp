@@ -17,10 +17,8 @@ namespace nts {
             Tristate compute(std::size_t pin) override;
 
         private:
-            // Internal counter: values 0 to 9
-            int _counter;
-            // Previous clock values for edge detection (CP0 on pin 14, CP1 on pin 13)
-            Tristate _prevCP0;
+            int _counter; // Internal counter: values 0 to 9
+            Tristate _prevCP0; // Previous clock values for edge detection (CP0 on pin 14, CP1 on pin 13)
             Tristate _prevCP1;
     };
 }

@@ -44,7 +44,6 @@ namespace nts {
             Token processIdentifier(const std::string &line, size_t &i, int lineNumber);
             void processLine(const std::string &line, int lineNumber, std::vector<Token> &tokens);
             FileContent readFile(const std::string &filePath);
-
             void parseLink(std::vector<Token> &tokens, size_t &pos, Circuit &circuit);
             void parseChipset(std::vector<Token> &tokens, size_t &pos, Circuit &circuit);
     };

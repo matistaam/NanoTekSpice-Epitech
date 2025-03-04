@@ -12,8 +12,6 @@
 namespace nts {
     class AComponent : public IComponent {
         public:
-            ~AComponent() = default;
-
             void simulate(std::size_t tick) override;
             virtual Tristate compute(std::size_t pin) override;
 

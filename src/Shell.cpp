@@ -38,6 +38,9 @@ namespace nts {
 
     void Shell::handleCommand(const std::string &command)
     {
+        std::string name = "";
+        std::string value = "";
+
         if (command == "exit")
             this->_running = false;
         else if (command == "simulate")
@@ -47,8 +50,8 @@ namespace nts {
         else if (command == "loop")
             loop();
         else if (command.find('=') != std::string::npos) {
-            std::string name = command.substr(0, command.find('='));
-            std::string value = command.substr(command.find('=') + 1);
+            name = command.substr(0, command.find('='));
+            value = command.substr(command.find('=') + 1);
             setInput(name, value);
         }
     }
@@ -84,7 +87,6 @@ namespace nts {
     {
         signal(SIGINT, signalHandler);
         g_looping = true;
-
         while (g_looping) {
             simulate();
             display();

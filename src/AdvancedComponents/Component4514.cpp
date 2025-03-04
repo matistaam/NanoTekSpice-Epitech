@@ -9,9 +9,8 @@
 #include "NtsException.hpp"
 
 namespace nts {
-    Component4514::Component4514() : _pins(24, {nullptr, 0}), _values(24, Tristate::UNDEFINED),
-    _latchedA(Tristate::UNDEFINED), _latchedB(Tristate::UNDEFINED), _latchedC(Tristate::UNDEFINED),
-    _latchedD(Tristate::UNDEFINED), _prevLatchEnable(Tristate::UNDEFINED)
+    Component4514::Component4514() : _pins(24, {nullptr, 0}), _values(24, Tristate::UNDEFINED), _latchedA(Tristate::UNDEFINED),
+    _latchedB(Tristate::UNDEFINED), _latchedC(Tristate::UNDEFINED), _latchedD(Tristate::UNDEFINED), _prevLatchEnable(Tristate::UNDEFINED)
     {
     }
 

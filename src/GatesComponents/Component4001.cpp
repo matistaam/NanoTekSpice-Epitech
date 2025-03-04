@@ -9,7 +9,6 @@
 #include "NtsException.hpp"
 
 namespace nts {
-
     Tristate Component4001::computeNor(Tristate a, Tristate b)
     {
         if (a == Tristate::TRUE || b == Tristate::TRUE)
