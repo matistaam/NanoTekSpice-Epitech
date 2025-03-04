@@ -25,6 +25,8 @@ namespace nts {
             tokenStr.push_back(line[i]);
             i++;
         }
+        if (i < line.size() && std::isalpha(line[i]))
+            throw ParseError("Unexpected character '" + std::string(1, line[i]) + "' after number '" + tokenStr);
         i--;
         return {TokenType::Number, tokenStr, lineNumber};
     }
