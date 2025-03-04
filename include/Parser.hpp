@@ -33,7 +33,6 @@ namespace nts {
         public:
             std::vector<Token> tokenize(const std::string &filePath);
             void parse(const std::string &filePath, nts::Circuit &circuit);
-            //void printTokens(const std::vector<Token> &tokens);
 
         private:
             struct FileContent {
