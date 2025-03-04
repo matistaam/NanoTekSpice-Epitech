@@ -5,6 +5,7 @@
 ** NotComponent
 */
 
+#include "NtsException.hpp"
 #include "NotComponent.hpp"
 
 namespace nts {
@@ -13,7 +14,7 @@ namespace nts {
         Tristate a = Tristate::UNDEFINED;
 
         if (pin != 2)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("NotComponent", pin);
         a = getLink(1);
         if (a == Tristate::UNDEFINED)
             return (Tristate::UNDEFINED);

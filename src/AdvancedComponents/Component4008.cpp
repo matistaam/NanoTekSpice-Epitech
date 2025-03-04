@@ -13,8 +13,9 @@ namespace nts {
     {
     }
 
-    void Component4008::simulate(std::size_t)
+    void Component4008::simulate(std::size_t tick)
     {
+        (void)tick;
     }
 
     Tristate Component4008::compute(std::size_t pin)
@@ -56,8 +57,11 @@ namespace nts {
 
     Tristate Component4008::getValue(std::size_t pin)
     {
-        Link link = _pins[pin - 1];
+        Link link = {nullptr, 0};
 
+        if (pin < 1 || pin > 16)
+            throw InvalidPinError("4008", pin);
+        link = this->_pins[pin - 1];
         if (link.comp != nullptr)
             return (link.comp->compute(link.pin));
         return (this->_values[pin - 1]);
@@ -91,8 +95,7 @@ namespace nts {
         return (Tristate::FALSE);
     }
 
-    // Full-adder for one bit: returns {sum, carry_out}
-    std::pair<Tristate, Tristate> Component4008::fullAdder(Tristate a, Tristate b, Tristate carry)
+    std::pair<Tristate, Tristate> Component4008::fullAdder(Tristate a, Tristate b, Tristate carry) // Full-adder for one bit: returns {sum, carry_out}
     {
         Tristate tmp = computeXor(a, b);
         Tristate sum = computeXor(tmp, carry);

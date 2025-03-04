@@ -5,13 +5,14 @@
 ** OutputComponent
 */
 
+#include "NtsException.hpp"
 #include "OutputComponent.hpp"
 
 namespace nts {
     Tristate OutputComponent::compute(std::size_t pin)
     {
         if (pin != 1)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("OutputComponent", pin);
         return (getLink(1));
     }
 }

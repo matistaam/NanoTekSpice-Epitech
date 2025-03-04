@@ -5,6 +5,7 @@
 ** LoggerComponent
 */
 
+#include "NtsException.hpp"
 #include "LoggerComponent.hpp"
 
 namespace nts {
@@ -37,7 +38,7 @@ namespace nts {
     Tristate LoggerComponent::compute(std::size_t pin)
     {
         if (pin < 1 || pin > 10)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("LoggerComponent", pin);
         return (getLink(pin));
     }
 

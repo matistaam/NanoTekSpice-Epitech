@@ -5,8 +5,8 @@
 ** Component4094
 */
 
-#include "Component4094.hpp"
 #include "NtsException.hpp"
+#include "Component4094.hpp"
 
 namespace nts {
     Component4094::Component4094() : _pins(16, {nullptr, 0}), _values(16, Tristate::UNDEFINED), _shift(8, Tristate::UNDEFINED),
@@ -14,8 +14,9 @@ namespace nts {
     {
     }
 
-    void Component4094::simulate(std::size_t)
+    void Component4094::simulate(std::size_t tick)
     {
+        (void)tick;
         Tristate clockVal   = getValue(3); // Retrieve input values
         Tristate strobeVal  = getValue(1);
         Tristate dataVal    = getValue(2);
@@ -93,8 +94,11 @@ namespace nts {
 
     Tristate Component4094::getValue(std::size_t pin)
     {
-        Link link = this->_pins[pin - 1];
+        Link link = {nullptr, 0};
 
+        if (pin < 1 || pin > 16)
+            throw InvalidPinError("4094", pin);
+        link = this->_pins[pin - 1];
         if (link.comp != nullptr)
             return (link.comp->compute(link.pin));
         return (this->_values[pin - 1]);

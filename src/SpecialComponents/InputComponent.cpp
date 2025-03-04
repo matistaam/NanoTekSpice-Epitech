@@ -5,6 +5,7 @@
 ** InputComponent
 */
 
+#include "NtsException.hpp"
 #include "InputComponent.hpp"
 
 namespace nts {
@@ -21,7 +22,7 @@ namespace nts {
     Tristate InputComponent::compute(std::size_t pin)
     {
         if (pin != 1)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("InputComponent", pin);
         return (this->_state);
     }
 

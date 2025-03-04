@@ -5,6 +5,7 @@
 ** AndComponent
 */
 
+#include "NtsException.hpp"
 #include "AndComponent.hpp"
 
 namespace nts {
@@ -14,7 +15,7 @@ namespace nts {
         Tristate b = Tristate::UNDEFINED;
 
         if (pin != 3)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("AndComponent", pin);
         a = getLink(1);
         b = getLink(2);
         if (a == Tristate::FALSE || b == Tristate::FALSE)

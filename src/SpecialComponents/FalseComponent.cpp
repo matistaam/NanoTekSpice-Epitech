@@ -5,13 +5,14 @@
 ** FalseComponent
 */
 
+#include "NtsException.hpp"
 #include "FalseComponent.hpp"
 
 namespace nts {
     Tristate FalseComponent::compute(std::size_t pin)
     {
         if (pin != 1)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("FalseComponent", pin);
         return (Tristate::FALSE);
     }
 }

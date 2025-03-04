@@ -5,6 +5,7 @@
 ** XorComponent
 */
 
+#include "NtsException.hpp"
 #include "XorComponent.hpp"
 
 namespace nts {
@@ -14,7 +15,7 @@ namespace nts {
         Tristate b = Tristate::UNDEFINED;
 
         if (pin != 3)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("XorComponent", pin);
         a = getLink(1);
         b = getLink(2);
         if (a == Tristate::UNDEFINED || b == Tristate::UNDEFINED)

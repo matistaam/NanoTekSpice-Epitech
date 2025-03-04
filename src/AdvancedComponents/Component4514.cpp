@@ -33,8 +33,11 @@ namespace nts {
 
     Tristate Component4514::getValue(std::size_t pin)
     {
-        Link link = this->_pins[pin - 1];
+        Link link = {nullptr, 0};
 
+        if (pin < 1 || pin > 24)
+            throw InvalidPinError("4514", pin);
+        link = this->_pins[pin - 1];
         if (link.comp != nullptr)
             return (link.comp->compute(link.pin));
         return (this->_values[pin - 1]);

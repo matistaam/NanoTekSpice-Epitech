@@ -14,8 +14,9 @@ namespace nts {
     {
     }
 
-    void Component4013::simulate(std::size_t)
+    void Component4013::simulate(std::size_t tick)
     {
+        (void)tick;
         Tristate clock1 = getValue(3); // Process first flip-flop (pins 1-6)
         Tristate clock2 = Tristate::UNDEFINED;
 
@@ -64,8 +65,11 @@ namespace nts {
 
     Tristate Component4013::getValue(std::size_t pin)
     {
-        Link link = this->_pins[pin - 1];
+        Link link = {nullptr, 0};
 
+        if (pin < 1 || pin > 14)
+            throw InvalidPinError("4013", pin);
+        link = this->_pins[pin - 1];
         if (link.comp != nullptr)
             return (link.comp->compute(link.pin));
         return (this->_values[pin - 1]);

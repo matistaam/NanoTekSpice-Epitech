@@ -5,6 +5,7 @@
 ** Component4017
 */
 
+#include "NtsException.hpp"
 #include "Component4017.hpp"
 
 namespace nts {
@@ -46,6 +47,8 @@ namespace nts {
         Tristate mr = Tristate::UNDEFINED;
         int count = 0;
 
+        if (pin < 1 || pin > 16)
+            throw InvalidPinError("4017", pin);
         if (pin == 13 || pin == 14 || pin == 15) { // For input pins (CP0, CP1, MR), delegate to the linked component if present
             if (this->_links.find(pin) != this->_links.end())
                 return (this->_links[pin].first->compute(this->_links[pin].second));

@@ -5,6 +5,7 @@
 ** OrComponent
 */
 
+#include "NtsException.hpp"
 #include "OrComponent.hpp"
 
 namespace nts {
@@ -14,7 +15,7 @@ namespace nts {
         Tristate b = Tristate::UNDEFINED;
 
         if (pin != 3)
-            return (Tristate::UNDEFINED);
+            throw InvalidPinError("OrComponent", pin);
         a = getLink(1);
         b = getLink(2);
         if (a == Tristate::TRUE || b == Tristate::TRUE)
