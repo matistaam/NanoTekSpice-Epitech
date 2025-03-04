@@ -40,18 +40,25 @@ namespace nts {
     {
         std::string name = "";
         std::string value = "";
+        std::string trimmedCommand = command;
 
-        if (command == "exit")
+        trimmedCommand.erase(trimmedCommand.find_last_not_of(" \t") + 1);
+        trimmedCommand.erase(0, trimmedCommand.find_first_not_of(" \t"));
+        if (trimmedCommand == "exit")
             this->_running = false;
-        else if (command == "simulate")
+        else if (trimmedCommand == "simulate")
             simulate();
-        else if (command == "display")
+        else if (trimmedCommand == "display")
             display();
-        else if (command == "loop")
+        else if (trimmedCommand == "loop")
             loop();
-        else if (command.find('=') != std::string::npos) {
-            name = command.substr(0, command.find('='));
-            value = command.substr(command.find('=') + 1);
+        else if (trimmedCommand.find('=') != std::string::npos) {
+            name = trimmedCommand.substr(0, trimmedCommand.find('='));
+            value = trimmedCommand.substr(trimmedCommand.find('=') + 1);
+            name.erase(name.find_last_not_of(" \t") + 1);
+            name.erase(0, name.find_first_not_of(" \t"));
+            value.erase(value.find_last_not_of(" \t") + 1);
+            value.erase(0, value.find_first_not_of(" \t"));
             setInput(name, value);
         }
     }
