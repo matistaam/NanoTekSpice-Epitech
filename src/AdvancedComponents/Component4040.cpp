@@ -34,6 +34,8 @@ namespace nts {
 
     Tristate Component4040::compute(std::size_t pin)
     {
+        Link link = {nullptr, 0};
+
         if (pin < 1 || pin > 16)
             throw InvalidPinError("4040", pin);
         switch (pin) { // Map the outputs based on the 4040 pin configuration
@@ -57,17 +59,17 @@ namespace nts {
                 return ((this->_counter & (1 << 0)) ? Tristate::TRUE : Tristate::FALSE);
             case 10: // Clock input
             {
-                Link link = this->_pins[9];
+                link = this->_pins[9];
                 if (link.comp != nullptr)
-                    return link.comp->compute(link.pin);
-                return this->_values[9];
+                    return (link.comp->compute(link.pin));
+                return (this->_values[9]);
             }
             case 11: // Reset input
             {
-                Link link = this->_pins[10];
+                link = this->_pins[10];
                 if (link.comp != nullptr)
-                    return link.comp->compute(link.pin);
-                return this->_values[10];
+                    return (link.comp->compute(link.pin));
+                return (this->_values[10]);
             }
             case 12:
                 return ((this->_counter & (1 << 8)) ? Tristate::TRUE : Tristate::FALSE);
