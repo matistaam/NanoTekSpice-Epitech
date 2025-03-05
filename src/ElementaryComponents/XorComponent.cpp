@@ -15,7 +15,7 @@ namespace nts {
         Tristate b = Tristate::UNDEFINED;
 
         if (pin != 3)
-            throw InvalidPinError("XorComponent", pin);
+            return (Tristate::UNDEFINED);
         a = getLink(1);
         b = getLink(2);
         if (a == Tristate::UNDEFINED || b == Tristate::UNDEFINED)

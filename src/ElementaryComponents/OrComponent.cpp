@@ -15,7 +15,7 @@ namespace nts {
         Tristate b = Tristate::UNDEFINED;
 
         if (pin != 3)
-            throw InvalidPinError("OrComponent", pin);
+            return (Tristate::UNDEFINED);
         a = getLink(1);
         b = getLink(2);
         if (a == Tristate::TRUE || b == Tristate::TRUE)
