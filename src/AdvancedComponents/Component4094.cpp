@@ -12,6 +12,7 @@ namespace nts {
     Component4094::Component4094() : _pins(16, {nullptr, 0}), _values(16, Tristate::UNDEFINED), _shift(8, Tristate::UNDEFINED),
     _latch(8, Tristate::UNDEFINED), _out_qe(Tristate::UNDEFINED), _prevClock(Tristate::UNDEFINED), _prevStrobe(Tristate::UNDEFINED)
     {
+        _values[15 - 1] = Tristate::TRUE;
     }
 
     void Component4094::simulate(std::size_t tick)

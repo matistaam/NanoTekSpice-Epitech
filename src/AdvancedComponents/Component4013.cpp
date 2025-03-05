@@ -20,7 +20,7 @@ namespace nts {
         Tristate clock1 = getValue(3); // Process first flip-flop (pins 1-6)
         Tristate clock2 = Tristate::UNDEFINED;
 
-        if (this->_prevClock1 != Tristate::TRUE && clock1 == Tristate::TRUE) { // Detect rising edge on cl_1_clock
+        if (this->_prevClock1 != Tristate::FALSE && clock1 == Tristate::FALSE) { // falling edge detected
             if (getValue(6) == Tristate::TRUE) // Synchronous priority: set over reset
                 this->_q1 = Tristate::TRUE;
             else if (getValue(4) == Tristate::TRUE)
