@@ -14,8 +14,8 @@ namespace nts {
         public:
             Component4514();
 
-            //void simulate(std::size_t tick) override;
-            //Tristate compute(std::size_t pin) override;
+            void simulate(std::size_t tick) override;
+            Tristate compute(std::size_t pin) override;
 
             void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) override;
 
