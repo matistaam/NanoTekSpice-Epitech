@@ -11,7 +11,7 @@
 namespace nts {
     LoggerComponent::LoggerComponent() : _lastClock(false)
     {
-        this->_file.open("./log.bin", std::ios::binary | std::ios::app);
+        this->_file.open("./log.bin", std::ios::binary | std::ios::trunc);
     }
 
     LoggerComponent::~LoggerComponent()
