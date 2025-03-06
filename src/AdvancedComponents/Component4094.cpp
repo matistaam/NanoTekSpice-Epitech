@@ -18,22 +18,24 @@ namespace nts {
     void Component4094::simulate(std::size_t tick)
     {
         (void)tick;
-        Tristate clockVal   = getValue(3); // Retrieve input values
-        Tristate strobeVal  = getValue(1);
-        Tristate dataVal    = getValue(2);
+        Tristate clockVal   = getValue(3); // clock input
+        Tristate strobeVal  = getValue(1); // strobe input
+        Tristate dataVal    = getValue(2); // data input
 
-        if (this->_prevClock != Tristate::TRUE && clockVal == Tristate::TRUE) { // On positive clock edge: shift the register
+        if (this->_prevClock != Tristate::TRUE && clockVal == Tristate::TRUE) { // On rising clock edge: shift register
             for (int i = 7; i > 0; --i)
                 this->_shift[i] = this->_shift[i - 1];
             this->_shift[0] = dataVal;
         }
-        if (this->_prevClock == Tristate::TRUE && clockVal == Tristate::FALSE) // On negative clock edge: update the secondary output (out_qe)
+        if (this->_prevClock == Tristate::TRUE && clockVal == Tristate::FALSE) // On falling clock edge: update secondary output
             this->_out_qe = this->_shift[7];
-        if (this->_prevStrobe == Tristate::TRUE && strobeVal == Tristate::FALSE) { // On negative strobe edge: latch the shift register contents
+        
+        // Update latch on rising strobe edge (fix)
+        if (this->_prevStrobe != Tristate::TRUE && strobeVal == Tristate::TRUE) { 
             for (size_t i = 0; i < 8; ++i)
                 this->_latch[i] = this->_shift[i];
         }
-        this->_prevClock = clockVal; // Update previous state variables
+        this->_prevClock = clockVal;
         this->_prevStrobe = strobeVal;
     }
 
