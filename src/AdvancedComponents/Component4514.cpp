@@ -19,6 +19,8 @@ namespace nts {
         (void)tick;
         Tristate strobeVal = getValue(1);
 
+        if (this->_prevLatchEnable == Tristate::UNDEFINED && strobeVal != Tristate::UNDEFINED)
+            this->_prevLatchEnable = strobeVal;
         if (this->_prevLatchEnable == Tristate::TRUE && strobeVal == Tristate::FALSE) {
             this->_latchedA = getValue(2);
             this->_latchedB = getValue(3);
@@ -37,6 +39,12 @@ namespace nts {
         if (pin == 1 || pin == 2 || pin == 3 || pin == 21 || pin == 22 || pin == 23)
             return (getValue(pin));
         if (pin == 24 || pin == 12)
+            return (Tristate::UNDEFINED);
+        if (getValue(23) == Tristate::UNDEFINED ||
+        this->_latchedA == Tristate::UNDEFINED ||
+        this->_latchedB == Tristate::UNDEFINED ||
+        this->_latchedC == Tristate::UNDEFINED ||
+        this->_latchedD == Tristate::UNDEFINED)
             return (Tristate::UNDEFINED);
         if (getValue(23) == Tristate::TRUE)
             return (Tristate::FALSE);
