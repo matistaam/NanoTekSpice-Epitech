@@ -16,14 +16,13 @@ namespace nts {
     {
         (void)tick;
 
-        if (this->_state != Tristate::UNDEFINED && (this->_Simulated == false)) {
-            this->_Simulated = true;
-        } else if (this->_state != Tristate::UNDEFINED) {
-            if (this->_state == Tristate::TRUE) {
-                this->_state = Tristate::FALSE;
-            } else {
-                this->_state = Tristate::TRUE;
+        if (this->_state != Tristate::UNDEFINED) {
+            if (!this->_Simulated) {
+                this->_Simulated = true;
+            } else if (!this->_nextStateSet) {
+                this->_state = (this->_state == Tristate::TRUE) ? Tristate::FALSE : Tristate::TRUE;
             }
+            this->_nextStateSet = false;
         }
     }
 }

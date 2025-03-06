@@ -28,5 +28,6 @@ namespace nts {
     void InputComponent::setState(Tristate state)
     {
         this->_state = state;
+        this->_nextStateSet = true;
     }
 }

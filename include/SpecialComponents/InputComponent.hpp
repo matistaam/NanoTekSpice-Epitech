@@ -21,5 +21,6 @@ namespace nts {
         protected:
             Tristate _state;
             Tristate _nextState;
+            bool _nextStateSet;
     };
 }
