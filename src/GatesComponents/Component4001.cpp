@@ -20,19 +20,32 @@ namespace nts {
 
     Tristate Component4001::compute(std::size_t pin)
     {
+        static bool computing = false;
+        Tristate result = Tristate::UNDEFINED;
+
         if (pin < 1 || pin > 14)
             throw InvalidPinError("4001", pin);
+        if (computing)
+            return (Tristate::UNDEFINED);
+        computing = true;
+        result = Tristate::UNDEFINED;
         switch (pin) {
             case 3:
-                return (computeNor(getLink(1), getLink(2)));
+                result = computeNor(getLink(1), getLink(2));
+                break;
             case 4:
-                return (computeNor(getLink(5), getLink(6)));
+                result = computeNor(getLink(5), getLink(6));
+                break;
             case 10:
-                return (computeNor(getLink(8), getLink(9)));
+                result = computeNor(getLink(8), getLink(9));
+                break;
             case 11:
-                return (computeNor(getLink(12), getLink(13)));
+                result = computeNor(getLink(12), getLink(13));
+                break;
             default:
-                return (Tristate::UNDEFINED);
+                result = Tristate::UNDEFINED;
         }
+        computing = false;
+        return (result);
     }
 }
