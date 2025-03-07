@@ -9,11 +9,10 @@
 #include "NtsException.hpp"
 
 namespace nts {
-    Component4013::Component4013() : _pins(14, {nullptr, 0}), _values(14, Tristate::UNDEFINED), _q1(Tristate::UNDEFINED),
-    _q2(Tristate::UNDEFINED), _prevClock1(Tristate::UNDEFINED), _prevClock2(Tristate::UNDEFINED)
+    Component4013::Component4013() : _pins(14, {nullptr, 0}), _values(14, Tristate::UNDEFINED), _q1(Tristate::FALSE),
+    _q2(Tristate::FALSE), _prevClock1(Tristate::UNDEFINED), _prevClock2(Tristate::UNDEFINED)
     {
     }
-
     void Component4013::simulate(std::size_t tick)
     {
         (void)tick;
