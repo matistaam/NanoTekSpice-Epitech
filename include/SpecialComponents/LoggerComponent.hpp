@@ -7,20 +7,11 @@
 
 #pragma once
 #include "AComponent.hpp"
-#include <fstream>
 
 namespace nts {
     class LoggerComponent : public AComponent {
         public:
-            LoggerComponent();
-            ~LoggerComponent() override;
-
-            void simulate(std::size_t tick) override;
-            Tristate compute(std::size_t pin) override;
-
-        private:
-            char computeChar() const;
-            std::ofstream _file;
-            bool _lastClock;
+            void simulate(std::size_t tick = 1) override;
+            Tristate compute(std::size_t pin = 1) override;
     };
 }
