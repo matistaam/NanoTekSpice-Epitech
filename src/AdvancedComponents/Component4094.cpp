@@ -12,26 +12,24 @@ namespace nts {
     Component4094::Component4094() : _pins(16, {nullptr, 0}), _values(16, Tristate::UNDEFINED), _shift(8, Tristate::UNDEFINED),
     _latch(8, Tristate::UNDEFINED), _out_qe(Tristate::UNDEFINED), _prevClock(Tristate::UNDEFINED), _prevStrobe(Tristate::UNDEFINED)
     {
-        _values[15 - 1] = Tristate::TRUE;
+        this->_values[15 - 1] = Tristate::TRUE;
     }
 
     void Component4094::simulate(std::size_t tick)
     {
         (void)tick;
-        Tristate clockVal   = getValue(3); // clock input
-        Tristate strobeVal  = getValue(1); // strobe input
-        Tristate dataVal    = getValue(2); // data input
+        Tristate clockVal = getValue(3);
+        Tristate strobeVal = getValue(1);
+        Tristate dataVal = getValue(2);
 
-        if (this->_prevClock != Tristate::TRUE && clockVal == Tristate::TRUE) { // On rising clock edge: shift register
+        if (this->_prevClock != Tristate::TRUE && clockVal == Tristate::TRUE) {
             for (int i = 7; i > 0; --i)
                 this->_shift[i] = this->_shift[i - 1];
             this->_shift[0] = dataVal;
         }
-        if (this->_prevClock == Tristate::TRUE && clockVal == Tristate::FALSE) // On falling clock edge: update secondary output
+        if (this->_prevClock == Tristate::TRUE && clockVal == Tristate::FALSE)
             this->_out_qe = this->_shift[7];
-        
-        // Update latch on rising strobe edge (fix)
-        if (this->_prevStrobe != Tristate::TRUE && strobeVal == Tristate::TRUE) { 
+        if (this->_prevStrobe != Tristate::TRUE && strobeVal == Tristate::TRUE) {
             for (size_t i = 0; i < 8; ++i)
                 this->_latch[i] = this->_shift[i];
         }
@@ -45,21 +43,21 @@ namespace nts {
 
         if (pin < 1 || pin > 16)
             throw InvalidPinError("4094", pin);
-        switch (pin) { // For input pins, delegate to linked components
+        switch (pin) {
             case 1:
-                return (getValue(1)); // strobe input
+                return (getValue(1));
             case 2:
-                return (getValue(2)); // data input
+                return (getValue(2));
             case 3:
-                return (getValue(3)); // clock input
+                return (getValue(3));
             case 15:
-                return (getValue(15)); // enable input
+                return (getValue(15));
             default:
                 break;
         }
-        if (pin == 8 || pin == 16) // For power pins, return UNDEFINED
+        if (pin == 8 || pin == 16)
             return (Tristate::UNDEFINED);
-        enableVal = getValue(15); // Check enable, if not enabled, outputs are undefined
+        enableVal = getValue(15);
         if (enableVal != Tristate::TRUE)
             return (Tristate::UNDEFINED);
         switch (pin) {
@@ -72,9 +70,9 @@ namespace nts {
             case 7:
                 return (this->_latch[3]);
             case 9:
-                return (this->_shift[7]); // QS output (direct from shift register)
+                return (this->_shift[7]);
             case 10:
-                return (this->_out_qe); // Secondary output
+                return (this->_out_qe);
             case 11:
                 return (this->_latch[7]);
             case 12:

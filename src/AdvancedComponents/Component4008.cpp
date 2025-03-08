@@ -24,28 +24,26 @@ namespace nts {
 
         if (pin < 1 || pin > 16)
             throw InvalidPinError("4008", pin);
-        // For output pins, perform the full 4-bit addition.
-        // Results: sum bits on pins 10, 11, 12, 13; final carry on pin 14.
         if (pin == 10 || pin == 11 || pin == 12 || pin == 13 || pin == 14) {
-            carry = getValue(9); // initial carry in from in_c
+            carry = getValue(9);
             auto bit0 = fullAdder(getValue(7), getValue(6), carry);
             auto bit1 = fullAdder(getValue(5), getValue(4), bit0.second);
             auto bit2 = fullAdder(getValue(3), getValue(2), bit1.second);
             auto bit3 = fullAdder(getValue(1), getValue(15), bit2.second);
             switch(pin) {
                 case 10:
-                    return (bit0.first);  // out_0
+                    return (bit0.first);
                 case 11:
-                    return (bit1.first);  // out_1
+                    return (bit1.first);
                 case 12:
-                    return (bit2.first);  // out_2
+                    return (bit2.first);
                 case 13:
-                    return (bit3.first);  // out_3
+                    return (bit3.first);
                 case 14:
-                    return (bit3.second); // out_c
+                    return (bit3.second);
             }
         }
-        return (getValue(pin)); // For non-output pins, return the value provided by a linked component or stored value.
+        return (getValue(pin));
     }
 
     void Component4008::setLink(std::size_t pin, IComponent &other, std::size_t otherPin)
@@ -95,7 +93,7 @@ namespace nts {
         return (Tristate::FALSE);
     }
 
-    std::pair<Tristate, Tristate> Component4008::fullAdder(Tristate a, Tristate b, Tristate carry) // Full-adder for one bit: returns {sum, carry_out}
+    std::pair<Tristate, Tristate> Component4008::fullAdder(Tristate a, Tristate b, Tristate carry)
     {
         Tristate tmp = computeXor(a, b);
         Tristate sum = computeXor(tmp, carry);
