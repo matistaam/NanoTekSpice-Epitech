@@ -1,20 +1,22 @@
 # NanoTekSpice
+A digital circuit simulator that supports various logic gates and complex components for simulating and testing digital circuits.
 
-A digital circuit simulator that supports various logic gates and complex components.
+## 🚀 Features
+- Simulation of digital circuits
+- Multiple component types support
+- Interactive shell interface
+- Real-time circuit simulation
+- Comprehensive error handling
 
-## Description
+## 📋 Supported Components
 
-NanoTekSpice is a logic circuit simulator that allows you to build and simulate digital circuits using standard components. It implements various elementary logic gates and more complex integrated circuits.
-
-### Supported Components
-
-#### Elementary Components
+### Elementary Components
 - AND (2 inputs, 1 output)
 - OR (2 inputs, 1 output)
 - XOR (2 inputs, 1 output)
 - NOT (1 input, 1 output)
 
-#### Special Components
+### Special Components
 - Input (user-settable input)
 - Output (display output)
 - Clock (oscillating output)
@@ -22,7 +24,7 @@ NanoTekSpice is a logic circuit simulator that allows you to build and simulate 
 - False (constant 0)
 - Logger (binary output logger)
 
-#### Gates Components (4000 series)
+### Gates Components (4000 series)
 - 4001: Quad 2-input NOR gates
 - 4011: Quad 2-input NAND gates
 - 4030: Quad 2-input XOR gates
@@ -30,7 +32,7 @@ NanoTekSpice is a logic circuit simulator that allows you to build and simulate 
 - 4071: Quad 2-input OR gates
 - 4081: Quad 2-input AND gates
 
-#### Advanced Components
+### Advanced Components
 - 4008: 4-bit binary full adder
 - 4013: Dual D-type flip-flop
 - 4017: Decade counter with 10 decoded outputs
@@ -39,30 +41,37 @@ NanoTekSpice is a logic circuit simulator that allows you to build and simulate 
 - 4514: 4-bit latched/4-to-16 line decoder
 - 2716: 16K (2K x 8) UV erasable PROM
 
-## Building the Project
-
-```bash
+## 🛠️ Building the Project
+```sh
+# Build the project
 make
+
+# Clean object files
+make clean
+
+# Full clean (including executable)
+make fclean
+
+# Rebuild
+make re
 ```
 
-## Usage
-
-```bash
+## 🚦 Usage
+```sh
 ./nanotekspice circuit_file.nts
 ```
 
-The program accepts a circuit file (.nts) as input. The circuit file must contain two sections:
-- `.chipsets`: List of components in the circuit
-- `.links`: Connections between component pins
+## 💻 Shell Commands
+| Command | Description |
+|---------|-------------|
+| exit | Quit the program |
+| display | Show current values of inputs/outputs |
+| simulate | Simulate one tick of the circuit |
+| loop | Run simulation continuously |
+| input=value | Set input value (0: FALSE, 1: TRUE, U: UNDEFINED) |
 
-### Interactive Shell Commands
-- `exit`: Quit the program
-- `display`: Show the current values of inputs and outputs
-- `simulate`: Simulate one tick of the circuit
-- `loop`: Run simulation continuously (Ctrl+C to stop)
-- `input=value`: Set an input's value (0: FALSE, 1: TRUE, U: UNDEFINED)
-
-### Circuit File Format Example
+## 📝 Circuit File Format
+The circuit file (.nts) must contain two sections:
 ```
 .chipsets
 input in1
@@ -76,8 +85,7 @@ in2:1 and:2
 and:3 out:1
 ```
 
-## Error Handling
-
+## ⚠️ Error Handling
 The simulator includes comprehensive error handling for:
 - Invalid circuit files
 - Unknown components
@@ -86,18 +94,5 @@ The simulator includes comprehensive error handling for:
 - Missing sections in circuit files
 - Invalid input values
 
-## Building and Testing
-
-```bash
-# Build the project
-make
-
-# Clean object files
-make clean
-
-# Clean everything
-make fclean
-
-# Rebuild
-make re
-```
+## 📄 Note
+This project is part of the EPITECH curriculum and implements a digital circuit simulator following specific requirements and guidelines.
